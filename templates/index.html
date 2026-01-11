@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake User Generator</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .controls { margin-bottom: 20px; padding: 10px; background: #fafafa; }
+    </style>
+</head>
+<body>
+    <h2>Fake User Generator</h2>
+
+    <div class="controls">
+        <form method="GET" action="/">
+            <label>Locale:</label>
+            <select name="locale">
+                <option value="en_US" {% if locale == 'en_US' %}selected{% endif %}>en_US</option>
+                <option value="de_DE" {% if locale == 'de_DE' %}selected{% endif %}>de_DE</option>
+            </select>
+            
+            <label>Seed:</label>
+            <input type="number" name="seed" value="{{ seed }}">
+            
+            <input type="hidden" name="batch" value="0">
+            
+            <button type="submit">Generate</button>
+        </form>
+        
+        <br>
+        <a href="/?locale={{ locale }}&seed={{ seed }}&batch={{ batch + 1 }}">
+            <button>Next batch</button>
+        </a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full name</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Geo</th>
+                <th>Height</th>
+            </tr>
+        </thead>
+        <tbody id="data-body">
+            {% for row in rows %}
+            <tr>
+                <td>{{ row.idx }}</td>
+                <td>{{ row.full_name }}</td>
+                <td>{{ row.address }}</td>
+                <td>{{ row.email }}</td>
+                <td>{{ row.phone }}</td>
+                <td>{{ row.geo }}</td>
+                <td>{{ row.height_cm }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
