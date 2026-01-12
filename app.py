@@ -54,6 +54,8 @@ def index():
     locale = request.args.get("locale", "en_US")
     seed = int(request.args.get("seed", 123))
     batch = int(request.args.get("batch", 0))
+
+    offset = batch_number * 10
     
     rows = get_db_data(locale, seed, batch)
     return render_template("index.html", rows=rows, locale=locale, seed=seed, batch=batch)
@@ -61,4 +63,5 @@ def index():
 if __name__ == "__main__":
     # Render сам подставит нужный порт через переменную окружения PORT
     port = int(os.environ.get("PORT", 5000))
+
     app.run(debug=False, host="0.0.0.0", port=port)
